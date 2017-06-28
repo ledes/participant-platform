@@ -1,15 +1,15 @@
 class CreateParticipants < ActiveRecord::Migration[5.0]
   def change
     create_table :participants do |t|
-      t.integer :external_id, uniqueness: true
+      t.string :external_identifier
       t.string :first_name, null: false
       t.string :last_name, null: false
       t.string :middle_name
-      t.boolean :has_siblings, null: false
+      t.boolean :has_siblings
       t.integer :age, null: false
       t.string :environmental_exposures
       t.string :genetic_mutations
-      t.string :status_id, null: false, default: 1
+      t.integer :status_id, null: false
 
       t.timestamps null: false
     end

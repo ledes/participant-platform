@@ -1,5 +1,5 @@
 class Status < ApplicationRecord
   has_many :participants
 
-  validates :name, presence: true
+  validates :status_name, presence: true
 end
