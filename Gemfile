@@ -12,6 +12,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'react-rails'
 gem 'lodash-rails'
 gem 'rails_12factor'
+gem 'bootstrap-sass'
+gem 'font-awesome-sass'
 
 group :development, :test do
   gem 'byebug', platform: :mri

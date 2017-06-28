@@ -1,10 +1,17 @@
 #participant-platform {
-  #sub-header {
+  #top-bar {
+    margin: 20px;
     display: flex;
     #nav-tabs-container {
       flex-grow: 1;
-      li {
-        width: 110px;
+      .fa {
+        margin-right: 5px;
+      }
+      .fa-plus-circle {
+        font-size: 15px;
+      }
+      .fa-list {
+        font-size: 12px;
       }
     }
   }

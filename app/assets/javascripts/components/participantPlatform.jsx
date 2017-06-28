@@ -4,25 +4,30 @@ var ParticipantPlatform = React.createClass({
     participants: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
   },
 
+  getInitialState: function() {
+    return {
+      isParticipantsTabActivated: true
+    }
+  },
+
+  onAction: function(payload) {
+    switch(payload.action){
+      case "TAB_CHANGED":
+        this.setState({isParticipantsTabActivated: !this.state.isParticipantsTabActivated})
+        break;
+      default:
+        console.log("Caution! Action: '" + payload.action + "' was not handled.");
+    }
+  },
+
   render: function() {
-    var isTabActivated = true;
 
     return (
-      //Head Component
       <div id='participant-platform'>
-        <div id='sub-header'>
-            <div id='nav-tabs-container'>
-              <ul className="nav nav-pills">
-                <li role="presentation" className={isTabActivated ? '' : 'active'}>
-                  <a href="#" className='tab-link'>Participants</a>
-                </li>
-                <li role="presentation" className={isTabActivated ? '' : 'active'}>
-                  <a href="#" className='tab-link'>Add Participant</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <TopBar
+          onAction={this.onAction}
+          isParticipantsTabActivated={this.state.isParticipantsTabActivated}/>
+      </div>
 
         // Table component
        //  Form Component
