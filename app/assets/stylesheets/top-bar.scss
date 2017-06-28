@@ -1,0 +1,11 @@
+#participant-platform {
+  #sub-header {
+    display: flex;
+    #nav-tabs-container {
+      flex-grow: 1;
+      li {
+        width: 110px;
+      }
+    }
+  }
+}
