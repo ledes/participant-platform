@@ -6,7 +6,10 @@
   @include table-rounded-body($table-border-radius);
   @include table-bordered-body($table-border-body);
   // More compact table
-  td { padding: 10px; }
+  td {
+    padding: 10px;
+    max-width: 300px;
+  }
 
   tr td.passed-validation {
     background-color: $green-success;

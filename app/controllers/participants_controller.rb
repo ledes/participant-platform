@@ -8,7 +8,6 @@ class ParticipantsController < ApplicationController
   def new
     participant = Participant.new(participant_params)
     defaultStatus = Status.find_by(status_name: 'Not reviewed')
-    binding.pry
     participant.status_id = defaultStatus.id
     participant.save!
     render json: participant

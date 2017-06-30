@@ -55,6 +55,15 @@ var ParticipantPlatform = React.createClass({
     this.setState({ participants: adjustedParticipants });
   },
 
+  updateWithNewParticipant: function(participant) {
+    var adjustedParticipants = _.clone(this.state.participants);
+    adjustedParticipants.push(participant);
+    this.setState({
+      participants: adjustedParticipants,
+      isParticipantsTabActivated: true
+    });
+  },
+
   changeStatus: function(external_id, value) {
     var params = {status: value};
     var url = 'api/v1/participants/' + external_id + '/status';
@@ -81,11 +90,10 @@ var ParticipantPlatform = React.createClass({
       context: this,
       data: JSON.stringify(params),
       contentType: 'application/json',
-      success: function(result) {
-        debugger;
+      success: function(participant) {
+        this.updateWithNewParticipant(participant);
       },
       error: function (error) {
-        debugger
         console.log(error);
       }
     })
