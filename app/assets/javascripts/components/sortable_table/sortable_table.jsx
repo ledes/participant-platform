@@ -47,28 +47,27 @@ var SortableTable = React.createClass({
     if (!column.sortBy) {
       return (<th key={idx}>{column.header}</th>);
     }
-
     var className = "sortable";
     if (idx === this.state.sortColumnIndex) {
       className = this.state.sortDescending ? "sorted-desc" : "sorted-asc";
     }
 
-    var changeSort = function() {
-      if (idx === this.state.sortColumnIndex) {
-        var currentSortDescending = this.state.sortDescending;
-        this.setState({
-          sortDescending: !currentSortDescending
-        });
-      } else {
-        this.setState({sortColumnIndex: idx, sortDescending: false});
-      }
-    };
-
     return (
-      <th className={className} onClick={changeSort} key={idx}>
+      <th className={className} onClick={this.changeSort.bind(null, idx)} key={idx}>
         {column.header} <span className="sortable-table-icon glyphicon" />
       </th>
     );
+  },
+
+  changeSort: function(idx) {
+    if (idx === this.state.sortColumnIndex) {
+      var currentSortDescending = this.state.sortDescending;
+      this.setState({
+        sortDescending: !currentSortDescending
+      });
+    } else {
+      this.setState({sortColumnIndex: idx, sortDescending: false});
+    }
   },
 
   _renderRow: function(row, rowIdx) {
@@ -93,7 +92,12 @@ var SortableTable = React.createClass({
   // Sort
 
   _sortedData: function() {
-    // TODO write sort function
-    return this.props.data;
+    var column = this.props.columns[this.state.sortColumnIndex];
+    var sort = function(a, b) { return a < b ? -1 : a > b ? 1 : 0 };
+    if (this.state.sortDescending) {
+      return _.sortBy(this.props.data, [column.sortBy, sort]);
+    } else {
+      return _.sortBy(this.props.data, [column.sortBy, sort]).reverse();;
+    }
   },
 });
