@@ -109,8 +109,10 @@ var ParticipantPlatform = React.createClass({
         <TopBar
           onAction={this.onAction}
           isParticipantsTabActivated={this.state.isParticipantsTabActivated}/>
-        {this.renderSortableTable()}
-        {this.renderParticipantForm()}
+        <div className='platform-body'>
+          {this.renderSortableTable()}
+          {this.renderParticipantForm()}
+        </div>
       </div>
     );
   }

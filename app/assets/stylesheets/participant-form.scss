@@ -1,0 +1,45 @@
+@import 'constants';
+
+#participant-form {
+  padding: 20px;
+  margin: 21px 36px;
+  width: 601px;
+  max-width: 60%;
+  border: 1px solid $gray;
+  border-radius: 10px;
+
+  .form-group {
+    display: flex;
+    justify-content: space-between;
+    .form-sub-group {
+      display: flex;
+      flex-grow: 2;
+      flex-direction: column;
+      padding-right: 30px;
+    }
+    .form-sub-group.siblings-group {
+      flex-grow: 0;
+      .checkbox-group {
+        display: flex;
+        flex-direction: row;
+        label {
+          margin-right: 12px;
+          input {
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+    .form-sub-group.age-group input {
+      flex-grow: 1;
+      width: 60px;
+    }
+    .form-sub-group.textarea {
+      textarea {
+        width: 80%;
+        height: 90%;
+        min-height: 120px;
+      }
+    }
+  }
+}

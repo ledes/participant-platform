@@ -8,14 +8,6 @@
   // More compact table
   td { padding: 10px; }
 
-  // Lighten interior vertical lines
-  tr td {
-    border-right-color: $gray-lighter;
-    &:last-of-type {
-      border-right-color: $gray-light;
-    }
-  }
-
   tr td.passed-validation {
     background-color: $green-success;
   }
