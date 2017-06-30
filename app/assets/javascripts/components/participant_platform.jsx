@@ -38,12 +38,12 @@ var ParticipantPlatform = React.createClass({
                 header: "Identifier",
                 renderCell: participant => participant.external_identifier,
                 sortBy: participant => participant.external_identifier,
+                initialSort: "desc",
               },
               {
                 header: "Name",
                 renderCell: participant => participant.first_name,
                 sortBy: participant => participant.first_name,
-                initialSort: "desc",
               },
               {
                 header: "Age",
@@ -54,13 +54,11 @@ var ParticipantPlatform = React.createClass({
                 header: "has siblings?",
                 renderCell: participant => participant.has_siblings ? "Yes" : "No",
                 sortBy: participant => participant.has_siblings,
-                initialSort: "desc",
               },
               {
                 header: "Status name",
                 renderCell: participant => participant.status_name,
                 sortBy: participant => participant.status_name,
-                initialSort: "desc",
               },
             ]}
           />
