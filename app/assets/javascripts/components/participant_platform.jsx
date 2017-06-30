@@ -98,7 +98,7 @@ var ParticipantPlatform = React.createClass({
     if (!this.state.isParticipantsTabActivated) {
       return (
         <ParticipantForm />
-      )
+      );
     }
   },
 
