@@ -110,7 +110,7 @@ var ParticipantPlatform = React.createClass({
                             dropdownColumnOptionIdKey: 'status_id',
                             action: 'CHANGE_STATUS'},
                 renderCell: function(participant) {return participant.status_name},
-                sortBy: function(participant) {return participant.status_name},
+                sortBy: function(participant) {return participant.status_id},
               },
             ]}
           />
