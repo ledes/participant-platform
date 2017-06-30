@@ -42,8 +42,8 @@ var ParticipantPlatform = React.createClass({
               },
               {
                 header: "Name",
-                renderCell: participant => participant.first_name,
-                sortBy: participant => participant.first_name,
+                renderCell: participant => participant.last_name + ", " + participant.first_name,
+                sortBy: participant => participant.last_name,
               },
               {
                 header: "Age",
@@ -51,9 +51,17 @@ var ParticipantPlatform = React.createClass({
                 sortBy: participant => participant.age,
               },
               {
-                header: "has siblings?",
+                header: "siblings",
                 renderCell: participant => participant.has_siblings ? "Yes" : "No",
                 sortBy: participant => participant.has_siblings,
+              },
+              {
+                header: "Known environmental exposures",
+                renderCell: participant => participant.environmental_exposures
+              },
+              {
+                header: "Known genetic mutations",
+                renderCell: participant => participant.genetic_mutations
               },
               {
                 header: "Status name",
@@ -62,7 +70,6 @@ var ParticipantPlatform = React.createClass({
               },
             ]}
           />
-
       </div>
 
         // Table component
