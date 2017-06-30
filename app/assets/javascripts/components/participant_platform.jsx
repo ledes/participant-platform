@@ -32,41 +32,48 @@ var ParticipantPlatform = React.createClass({
 
           <SortableTable
             data={participants}
-            keyFn={participant => participant.external_identifier}
+            keyFn={function(participant) {return participant.external_identifier}}
+            onAction={this.onAction}
             columns={[
               {
                 header: "Identifier",
-                renderCell: participant => participant.external_identifier,
-                sortBy: participant => participant.external_identifier,
+                renderCell: function(participant) {return participant.external_identifier},
+                sortBy: function(participant) {return participant.external_identifier},
                 initialSort: "desc",
               },
               {
                 header: "Name",
-                renderCell: participant => participant.last_name + ", " + participant.first_name,
-                sortBy: participant => participant.last_name,
+                renderCell: function(participant) {return participant.last_name + ", " + participant.first_name},
+                sortBy: function(participant) {return participant.last_name},
               },
               {
                 header: "Age",
-                renderCell: participant => participant.age,
-                sortBy: participant => participant.age,
+                renderCell: function(participant) {return participant.age},
+                sortBy: function(participant) {return participant.age},
               },
               {
                 header: "siblings",
-                renderCell: participant => participant.has_siblings ? "Yes" : "No",
-                sortBy: participant => participant.has_siblings,
+                renderCell: function(participant) {return participant.has_siblings ? "Yes" : "No"},
+                sortBy: function(participant) {return participant.has_siblings}
               },
               {
                 header: "Known environmental exposures",
-                renderCell: participant => participant.environmental_exposures
+                renderCell: function(participant) {return participant.environmental_exposures}
               },
               {
                 header: "Known genetic mutations",
-                renderCell: participant => participant.genetic_mutations
+                renderCell: function(participant) {return participant.genetic_mutations}
               },
               {
                 header: "Status name",
-                renderCell: participant => participant.status_name,
-                sortBy: participant => participant.status_name,
+                dropdownOptions: [
+                  {action: 'CHANGE_TO_APPROVED', value: 'Accepted'},
+                  {action: 'CHANGE_TO_NOT_APPROVED', value: 'Not accepted'},
+                  {action: 'CHANGE_TO_NOT_REVIEWED', value: 'Not reviewed'}
+                ],
+                dropdownColumn: 'status_name',
+                renderCell: function(participant) {return participant.status_name},
+                sortBy: function(participant) {return participant.status_name},
               },
             ]}
           />

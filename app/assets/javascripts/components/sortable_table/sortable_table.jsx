@@ -7,6 +7,7 @@ var SortableTable = React.createClass({
   propTypes: {
     data: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
     keyFn: React.PropTypes.func.isRequired,
+    onAction: React.PropTypes.func.isRequired,
     columns: React.PropTypes.arrayOf(
       React.PropTypes.shape({
         header: React.PropTypes.node.isRequired,
@@ -70,7 +71,26 @@ var SortableTable = React.createClass({
     }
   },
 
+  test: function(e){
+    debugger;
+  },
+
+  renderDropDown: function(row, column, columnIdx, rowStyle) {
+    var that = this;
+    var options = _.map(column.dropdownOptions, function(op, opIdx) {
+      return ( <option key={opIdx}>{op.value}</option> );
+    })
+    return (
+      <td className={rowStyle} key={columnIdx}>
+        <select className="selectpicker" defaultValue={row[column.dropdownColumn]} onClick={that.changeOption}>
+          {options}
+        </select>
+      </td>
+    );
+  },
+
   _renderRow: function(row, rowIdx) {
+    var that = this;
     var rowStyle;
     if (row.status_name === 'Accepted') {
       rowStyle = 'passed-validation';
@@ -80,11 +100,17 @@ var SortableTable = React.createClass({
 
     return (
       <tr key={this.props.keyFn(row)}>
-        {this.props.columns.map((column, columnIdx) =>
-          <td className={rowStyle} key={columnIdx}>
-            {column.renderCell(row, rowIdx)}
-          </td>
-        )}
+        {_.map(this.props.columns, function(column, columnIdx) {
+          if (column.dropdownOptions && column.dropdownColumn) {
+            return that.renderDropDown(row, column, columnIdx, rowStyle);
+          } else {
+            return (
+              <td className={rowStyle} key={columnIdx}>
+                {column.renderCell(row, rowIdx)}
+              </td>
+            );
+          }
+        })}
       </tr>
     );
   },
