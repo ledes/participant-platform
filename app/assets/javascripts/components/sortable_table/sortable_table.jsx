@@ -7,11 +7,17 @@ var SortableTable = React.createClass({
   propTypes: {
     data: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
     keyFn: React.PropTypes.func.isRequired,
+    validationColum: React.PropTypes.string.isRequired,
     columns: React.PropTypes.arrayOf(
       React.PropTypes.shape({
         header: React.PropTypes.node.isRequired,
         renderCell: React.PropTypes.func.isRequired,
         sortBy: React.PropTypes.func,
+        dropdown: React.PropTypes.shape({
+          dropdownColumnOptionIdKey: React.PropTypes.string.isRequired,
+          action: React.PropTypes.string.isRequired,
+          options: React.PropTypes.arrayOf(React.PropTypes.object),
+        }),
         initialSort: React.PropTypes.oneOf(["asc", "desc"])
       })
     ).isRequired,
@@ -32,18 +38,18 @@ var SortableTable = React.createClass({
   render: function() {
     return (
       <table className="table sortable-table">
-        <colgroup>{this.props.columns.map(this._renderCol)}</colgroup>
-        <thead><tr>{this.props.columns.map(this._renderHeaderCell)}</tr></thead>
-        <tbody>{this._sortedData().map(this._renderRow)}</tbody>
+        <colgroup>{this.props.columns.map(this.renderCol)}</colgroup>
+        <thead><tr>{this.props.columns.map(this.renderHeaderCell)}</tr></thead>
+        <tbody>{this._sortedData().map(this.renderRow)}</tbody>
       </table>
     );
   },
 
-  _renderCol: function(column, idx) {
+  renderCol: function(column, idx) {
     return (<col key={idx} />);
   },
 
-  _renderHeaderCell: function(column, idx) {
+  renderHeaderCell: function(column, idx) {
     if (!column.sortBy) {
       return (<th key={idx}>{column.header}</th>);
     }
@@ -70,7 +76,7 @@ var SortableTable = React.createClass({
     }
   },
 
-  changeOption: function(payload, e){
+  onChangeOption: function(payload, e){
     var that = this;
     var params = {
       action: payload.action,
@@ -81,27 +87,33 @@ var SortableTable = React.createClass({
   },
 
   renderDropDown: function(row, column, columnIdx, rowStyle) {
+    var dropdownColumnOptionIdKey = column.dropdown.dropdownColumnOptionIdKey;
+    var options = column.dropdown.options;
     var that = this;
-    var options = _.map(column.dropdown.options, function(op, opIdx) {
-      return ( <option key={opIdx}>{op}</option> );
+    var uiOptions = _.map(options, function(op) {
+      return ( <option key={op.id}>{op.name}</option> );
     })
+    //TODO add explanation
+    var selectedOption = _.find(options, function(op) { return op.id === row[dropdownColumnOptionIdKey]});
     return (
       <td className={rowStyle} key={columnIdx}>
         <select className="selectpicker"
-                defaultValue={row[column.dropdown.dropdownColumn]}
-                onChange={that.changeOption.bind(null, {action: column.dropdown.action, rowId: this.props.keyFn(row)})}>
-          {options}
+                defaultValue={selectedOption.name}
+                onChange={that.onChangeOption.bind(null, {action: column.dropdown.action, rowId: this.props.keyFn(row)})}>
+          {uiOptions}
         </select>
       </td>
     );
   },
 
-  _renderRow: function(row, rowIdx) {
+  renderRow: function(row, rowIdx) {
+    // TODO add comment
+    var validationColum = this.props.validationColum;
     var that = this;
     var rowStyle;
-    if (row.status_name === 'Accepted') {
+    if (row[validationColum] === 1) {
       rowStyle = 'passed-validation';
-    } else if (row.status_name === 'Not accepted') {
+    } else if (row[validationColum] === 2) {
       rowStyle = 'failed-validation';
     }
 
