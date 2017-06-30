@@ -7,7 +7,6 @@ var SortableTable = React.createClass({
   propTypes: {
     data: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
     keyFn: React.PropTypes.func.isRequired,
-    onAction: React.PropTypes.func.isRequired,
     columns: React.PropTypes.arrayOf(
       React.PropTypes.shape({
         header: React.PropTypes.node.isRequired,
@@ -71,18 +70,25 @@ var SortableTable = React.createClass({
     }
   },
 
-  test: function(e){
-    debugger;
+  changeOption: function(action, e){
+    var that = this;
+    var payload = {
+      action: action,
+      value: e.target.value
+    };
+    this.props.onAction(payload);
   },
 
   renderDropDown: function(row, column, columnIdx, rowStyle) {
     var that = this;
-    var options = _.map(column.dropdownOptions, function(op, opIdx) {
-      return ( <option key={opIdx}>{op.value}</option> );
+    var options = _.map(column.dropdown.options, function(op, opIdx) {
+      return ( <option key={opIdx}>{op}</option> );
     })
     return (
       <td className={rowStyle} key={columnIdx}>
-        <select className="selectpicker" defaultValue={row[column.dropdownColumn]} onClick={that.changeOption}>
+        <select className="selectpicker"
+                defaultValue={row[column.dropdown.dropdownColumn]}
+                onChange={that.changeOption.bind(null, column.dropdown.action)}>
           {options}
         </select>
       </td>
@@ -101,7 +107,7 @@ var SortableTable = React.createClass({
     return (
       <tr key={this.props.keyFn(row)}>
         {_.map(this.props.columns, function(column, columnIdx) {
-          if (column.dropdownOptions && column.dropdownColumn) {
+          if (column.dropdown) {
             return that.renderDropDown(row, column, columnIdx, rowStyle);
           } else {
             return (

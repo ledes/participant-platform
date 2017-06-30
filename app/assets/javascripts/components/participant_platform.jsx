@@ -15,6 +15,9 @@ var ParticipantPlatform = React.createClass({
       case "TAB_CHANGED":
         this.setState({isParticipantsTabActivated: !this.state.isParticipantsTabActivated})
         break;
+      case "CHANGE_STATUS":
+        debugger;
+        break;
       default:
         console.log("Caution! Action: '" + payload.action + "' was not handled.");
     }
@@ -66,12 +69,9 @@ var ParticipantPlatform = React.createClass({
               },
               {
                 header: "Status name",
-                dropdownOptions: [
-                  {action: 'CHANGE_TO_APPROVED', value: 'Accepted'},
-                  {action: 'CHANGE_TO_NOT_APPROVED', value: 'Not accepted'},
-                  {action: 'CHANGE_TO_NOT_REVIEWED', value: 'Not reviewed'}
-                ],
-                dropdownColumn: 'status_name',
+                dropdown: { options: ['Accepted', 'Not accepted', 'Not reviewed'],
+                            dropdownColumn: 'status_name',
+                            action: 'CHANGE_STATUS'},
                 renderCell: function(participant) {return participant.status_name},
                 sortBy: function(participant) {return participant.status_name},
               },
