@@ -70,13 +70,14 @@ var SortableTable = React.createClass({
     }
   },
 
-  changeOption: function(action, e){
+  changeOption: function(payload, e){
     var that = this;
-    var payload = {
-      action: action,
-      value: e.target.value
+    var params = {
+      action: payload.action,
+      value: e.target.value,
+      rowId: payload.rowId
     };
-    this.props.onAction(payload);
+    this.props.onAction(params);
   },
 
   renderDropDown: function(row, column, columnIdx, rowStyle) {
@@ -88,7 +89,7 @@ var SortableTable = React.createClass({
       <td className={rowStyle} key={columnIdx}>
         <select className="selectpicker"
                 defaultValue={row[column.dropdown.dropdownColumn]}
-                onChange={that.changeOption.bind(null, column.dropdown.action)}>
+                onChange={that.changeOption.bind(null, {action: column.dropdown.action, rowId: this.props.keyFn(row)})}>
           {options}
         </select>
       </td>

@@ -13,14 +13,31 @@ var ParticipantPlatform = React.createClass({
   onAction: function(payload) {
     switch(payload.action){
       case "TAB_CHANGED":
-        this.setState({isParticipantsTabActivated: !this.state.isParticipantsTabActivated})
+        this.setState({isParticipantsTabActivated: !this.state.isParticipantsTabActivated});
         break;
       case "CHANGE_STATUS":
-        debugger;
+        this.changeStatus(payload.rowId, payload.value);
         break;
       default:
         console.log("Caution! Action: '" + payload.action + "' was not handled.");
     }
+  },
+
+  changeStatus: function(external_id, value) {
+    var params = {status: value};
+    var url = 'api/v1/participants/' + external_id + '/status';
+    return $.ajax({
+      url: url,
+      type: 'PUT',
+      data: JSON.stringify(params),
+      contentType: 'application/json',
+      success: function(data) {
+        debugger;
+      },
+      error: function (error) {
+        debugger;
+      }
+    })
   },
 
   render: function() {
