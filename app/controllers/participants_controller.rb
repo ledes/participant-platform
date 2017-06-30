@@ -15,5 +15,7 @@ class ParticipantsController < ApplicationController
     }
     result = ActiveRecord::Base.connection.execute(sql)
     result.to_a
+
+    ## TODO get full name
   end
 end
