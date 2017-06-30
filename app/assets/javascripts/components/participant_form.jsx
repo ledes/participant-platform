@@ -1,12 +1,15 @@
 var ParticipantForm = React.createClass({
 
+  propTypes: {
+    onAction: React.PropTypes.func.isRequired,
+  },
 
   getInitialState: function() {
     return {
-      firstName: '',
-      lastName: '',
+      first_name: '',
+      last_name: '',
       age: '',
-      hasSiblings: '',
+      has_siblings: '',
       environmental_exposures: '',
       genetic_mutations: ''
     }
@@ -14,21 +17,22 @@ var ParticipantForm = React.createClass({
 
   canSubmit: function() {
     var state = this.state;
-    debugger;
-    return !_.isEmpty(state.firstName) && !_.isEmpty(state.lastName) &&
-           !_.isEmpty(state.age) && state.hasSiblings !== '';
+    return !_.isEmpty(state.first_name) && !_.isEmpty(state.last_name) &&
+           !_.isEmpty(state.age) && state.has_siblings !== '';
   },
 
   onChangeText: function(key ,e) {
     switch(key) {
       case "firstName":
-        this.setState({firstName: e.target.value});
+        this.setState({first_name: e.target.value});
         break;
       case "lastName":
-        this.setState({lastName: e.target.value});
+        this.setState({last_name: e.target.value});
         break;
       case "age":
-        this.setState({age: e.target.value});
+        if (e.target.value >= 0 && e.target.value <= 140 ) {
+          this.setState({age: e.target.value});
+        }
         break;
       case "environmental_exposures":
         this.setState({environmental_exposures: e.target.value});
@@ -41,18 +45,23 @@ var ParticipantForm = React.createClass({
 
   onCheckHasSiblings: function(e) {
     if (e.target.checked) {
-      this.setState({hasSiblings: true});
+      this.setState({has_siblings: true});
     } else {
-      this.setState({hasSiblings: ''});
+      this.setState({has_siblings: ''});
     }
   },
 
   onCheckHasNoSiblings: function(e) {
     if (e.target.checked) {
-      this.setState({hasSiblings: false});
+      this.setState({has_siblings: false});
     } else {
-      this.setState({hasSiblings: ''});
+      this.setState({has_siblings: ''});
     }
+  },
+
+  submitParticipant: function() {
+    var params = _.clone(this.state);
+    this.props.onAction(params);
   },
 
   render: function() {
@@ -65,7 +74,7 @@ var ParticipantForm = React.createClass({
               className="form-control input-sm"
               type="text"
               placeholder="First name"
-              value={this.state.firstName}
+              value={this.state.first_name}
               onChange={this.onChangeText.bind(null, 'firstName')}
             />
           </div>
@@ -75,7 +84,7 @@ var ParticipantForm = React.createClass({
               className="form-control input-sm"
               type="text"
               placeholder="Last name"
-              value={this.state.lastName}
+              value={this.state.last_name}
               onChange={this.onChangeText.bind(null, 'lastName')} />
           </div>
         </div>
@@ -86,7 +95,7 @@ var ParticipantForm = React.createClass({
               <label>Yes
                 <input
                   name="Yes"
-                  checked={!_.isEmpty(this.state.hasSiblings) || this.state.hasSiblings === true}
+                  checked={!_.isEmpty(this.state.has_siblings) || this.state.has_siblings === true}
                   type="checkbox"
                   onChange={this.onCheckHasSiblings} />
               </label>
@@ -94,7 +103,7 @@ var ParticipantForm = React.createClass({
                 <input
                   name="No"
                   type="checkbox"
-                  checked={!_.isEmpty(this.state.hasSiblings) || this.state.hasSiblings === false}
+                  checked={!_.isEmpty(this.state.has_siblings) || this.state.has_siblings === false}
                   onChange={this.onCheckHasNoSiblings} />
               </label>
             </div>
@@ -105,6 +114,7 @@ var ParticipantForm = React.createClass({
                 className="form-control input-sm"
                 type="number"
                 placeholder="Age"
+                min={0}
                 value={this.state.age}
                 onChange={this.onChangeText.bind(null, 'age')} />
             </div>
@@ -130,7 +140,10 @@ var ParticipantForm = React.createClass({
                 onChange={this.onChangeText.bind(null, 'genetic_mutations')} />
           </div>
         </div>
-        <button type="submit" disabled={!this.canSubmit()} className="btn btn-default">Submit</button>
+        <button type="submit"
+                disabled={!this.canSubmit()}
+                onClick={this.submitParticipant}
+                className="btn btn-default">Submit</button>
       </div>
     );
   }

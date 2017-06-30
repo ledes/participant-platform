@@ -73,6 +73,24 @@ var ParticipantPlatform = React.createClass({
     })
   },
 
+  submitParticipant: function(params) {
+    var url = 'api/v1/participants/';
+    return $.ajax({
+      url: url,
+      type: 'POST',
+      context: this,
+      data: JSON.stringify(params),
+      contentType: 'application/json',
+      success: function(result) {
+        debugger;
+      },
+      error: function (error) {
+        debugger
+        console.log(error);
+      }
+    })
+  },
+
   formatDropdownOptions: function() {
     var statuses = this.props.statuses;
     return _.map(statuses, function(status) {
@@ -97,7 +115,7 @@ var ParticipantPlatform = React.createClass({
   renderParticipantForm: function() {
     if (!this.state.isParticipantsTabActivated) {
       return (
-        <ParticipantForm />
+        <ParticipantForm onAction={this.submitParticipant}/>
       );
     }
   },
