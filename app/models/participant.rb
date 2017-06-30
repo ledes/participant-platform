@@ -13,7 +13,7 @@ class Participant < ApplicationRecord
   end
 
   def generate_default_status_id
-    default_status = Status.find_by(status_name: 'not_reviewed')
+    default_status = Status.find_by(status_name: 'Not reviewed')
     self.update(status_id: default_status.id) if self.status_id.nil?
   end
 end

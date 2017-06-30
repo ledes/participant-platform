@@ -3,10 +3,10 @@ require 'csv'
 Participant.destroy_all
 Status.destroy_all
 
-status_names = %w( not_reviewed accepted not_accepted )
+status_names = [ 'Accepted', 'Not accepted', 'Not reviewed' ]
 
 status_names.each do |name|
-  Status.find_or_create_by( status_name: name )
+  Status.find_or_create_by(status_name: name)
 end
 
 initial_participants = File.read("#{Rails.root}/db/participants.csv")

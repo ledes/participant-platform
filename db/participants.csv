@@ -1,4 +1,4 @@
 external_identifier,first_name,last_name,middle_name,has_siblings,age,environmental_exposures,genetic_mutations,status_name
-,"Jon","Vermillion","Benjamin",true,29,"N/A","N/A","not_reviewed"
-,"Mark","Lopez","Anthony",false,64,"N/A","N/A","not_accepted"
-,"Lisa","Norton",,false,26,"N/A","N/A","accepted"
+,"Jon","Vermillion","Benjamin",true,29,"N/A","N/A","Not reviewed"
+,"Mark","Lopez","Anthony",false,64,"N/A","N/A","Not accepted"
+,"Lisa","Norton",,false,26,"N/A","N/A","Accepted"
