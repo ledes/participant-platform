@@ -53,6 +53,8 @@ var ParticipantPlatform = React.createClass({
               {
                 header: "has siblings?",
                 renderCell: participant => participant.has_siblings ? "Yes" : "No",
+                sortBy: participant => participant.has_siblings,
+                initialSort: "desc",
               },
               {
                 header: "Status name",
