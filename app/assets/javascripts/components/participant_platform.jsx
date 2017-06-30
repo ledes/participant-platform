@@ -83,13 +83,22 @@ var ParticipantPlatform = React.createClass({
   renderSortableTable: function() {
     var participants = this.state.participants;
     if (this.state.isParticipantsTabActivated) {
-      return (<SortableTable
+      return (
+        <SortableTable
           data={participants}
           keyFn={function(participant) {return participant.external_identifier}}
           onAction={this.onAction}
           validationColum={'status_id'}
           columns={this.state.columns}/>
       );
+    }
+  },
+
+  renderParticipantForm: function() {
+    if (!this.state.isParticipantsTabActivated) {
+      return (
+        <ParticipantForm />
+      )
     }
   },
 
@@ -101,6 +110,7 @@ var ParticipantPlatform = React.createClass({
           onAction={this.onAction}
           isParticipantsTabActivated={this.state.isParticipantsTabActivated}/>
         {this.renderSortableTable()}
+        {this.renderParticipantForm()}
       </div>
     );
   }
