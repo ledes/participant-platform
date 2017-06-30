@@ -16,6 +16,13 @@
     }
   }
 
+  tr td.passed-validation {
+    background-color: $green-success;
+  }
+  tr td.failed-validation {
+    background-color: $red-alert;
+  }
+
   // Sorting Icons
   th {
     border: none;

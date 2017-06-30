@@ -53,7 +53,7 @@ var SortableTable = React.createClass({
       className = this.state.sortDescending ? "sorted-desc" : "sorted-asc";
     }
 
-    var changeSort = () => {
+    var changeSort = function() {
       if (idx === this.state.sortColumnIndex) {
         var currentSortDescending = this.state.sortDescending;
         this.setState({
@@ -72,10 +72,17 @@ var SortableTable = React.createClass({
   },
 
   _renderRow: function(row, rowIdx) {
+    var rowStyle;
+    if (row.status_name === 'Accepted') {
+      rowStyle = 'passed-validation';
+    } else if (row.status_name === 'Not accepted') {
+      rowStyle = 'failed-validation';
+    }
+
     return (
       <tr key={this.props.keyFn(row)}>
         {this.props.columns.map((column, columnIdx) =>
-          <td key={columnIdx}>
+          <td className={rowStyle} key={columnIdx}>
             {column.renderCell(row, rowIdx)}
           </td>
         )}

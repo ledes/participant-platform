@@ -5,6 +5,10 @@ $gray:                   lighten($gray-base, 30%) !default; // #555
 $gray-light:             lighten($gray-base, 45%) !default; // #777
 $gray-lighter:           lighten($gray-base, 90%) !default; // #eee
 
+$green-success:          #eaf6ea;
+$red-alert:              #fae8e8;
+
+
 // Others
 
 $table-border-radius: 3px;

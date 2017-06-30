@@ -22,13 +22,13 @@ var ParticipantPlatform = React.createClass({
 
   render: function() {
     var participants = this.props.participants;
+    // TODO extract blob of columns
 
     return (
       <div id='participant-platform'>
         <TopBar
           onAction={this.onAction}
           isParticipantsTabActivated={this.state.isParticipantsTabActivated}/>
-
 
           <SortableTable
             data={participants}
