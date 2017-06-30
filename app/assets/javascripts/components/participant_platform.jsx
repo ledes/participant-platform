@@ -8,8 +8,29 @@ var ParticipantPlatform = React.createClass({
   getInitialState: function() {
     return {
       participants: this.props.participants,
-      isParticipantsTabActivated: true
+      isParticipantsTabActivated: true,
+      columns: []
     }
+  },
+
+  componentWillMount: function() {
+    this.getColumns();
+  },
+
+  // Adds Status column, since we need to access the 'statuses' to build the column
+  getColumns: function() {
+    var statuses = this.formatDropdownOptions();
+    var columns = Blobs.StandartTableColumns;
+    var statusColumn = {
+      header: "Status name",
+      dropdown: { options: statuses, //{id, name}
+      dropdownColumnOptionIdKey: 'status_id',
+      action: 'CHANGE_STATUS'},
+      renderCell: function(participant) {return participant.status_name},
+      sortBy: function(participant) {return participant.status_id},
+    };
+    columns.push(statusColumn);
+    this.setState({columns: columns});
   },
 
   onAction: function(payload) {
@@ -59,65 +80,28 @@ var ParticipantPlatform = React.createClass({
     })
   },
 
-  render: function() {
+  renderSortableTable: function() {
     var participants = this.state.participants;
-    var statuses = this.formatDropdownOptions();
-    // TODO extract blob of columns
+    if (this.state.isParticipantsTabActivated) {
+      return (<SortableTable
+          data={participants}
+          keyFn={function(participant) {return participant.external_identifier}}
+          onAction={this.onAction}
+          validationColum={'status_id'}
+          columns={this.state.columns}/>
+      );
+    }
+  },
+
+  render: function() {
+
     return (
       <div id='participant-platform'>
         <TopBar
           onAction={this.onAction}
           isParticipantsTabActivated={this.state.isParticipantsTabActivated}/>
-
-          <SortableTable
-            data={participants}
-            keyFn={function(participant) {return participant.external_identifier}}
-            onAction={this.onAction}
-            validationColum={'status_id'}
-            columns={[
-              {
-                header: "Identifier",
-                renderCell: function(participant) {return participant.external_identifier},
-                sortBy: function(participant) {return participant.external_identifier},
-                initialSort: "desc",
-              },
-              {
-                header: "Name",
-                renderCell: function(participant) {return participant.last_name + ", " + participant.first_name},
-                sortBy: function(participant) {return participant.last_name},
-              },
-              {
-                header: "Age",
-                renderCell: function(participant) {return participant.age},
-                sortBy: function(participant) {return participant.age},
-              },
-              {
-                header: "siblings",
-                renderCell: function(participant) {return participant.has_siblings ? "Yes" : "No"},
-                sortBy: function(participant) {return participant.has_siblings}
-              },
-              {
-                header: "Known environmental exposures",
-                renderCell: function(participant) {return participant.environmental_exposures}
-              },
-              {
-                header: "Known genetic mutations",
-                renderCell: function(participant) {return participant.genetic_mutations}
-              },
-              {
-                header: "Status name",
-                dropdown: { options: statuses, //{id, name}
-                            dropdownColumnOptionIdKey: 'status_id',
-                            action: 'CHANGE_STATUS'},
-                renderCell: function(participant) {return participant.status_name},
-                sortBy: function(participant) {return participant.status_id},
-              },
-            ]}
-          />
+        {this.renderSortableTable()}
       </div>
-
-        // Table component
-       //  Form Component
     );
   }
 });
