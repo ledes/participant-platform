@@ -20,7 +20,7 @@ var ParticipantPlatform = React.createClass({
   // Adds Status column, since we need to access the 'statuses' to build the column
   getColumns: function() {
     var statuses = this.formatDropdownOptions();
-    var columns = Blobs.StandartTableColumns;
+    var columns = Blobs.StandardTableColumns;
     var statusColumn = {
       header: "Status name",
       dropdown: { options: statuses, //{id, name}

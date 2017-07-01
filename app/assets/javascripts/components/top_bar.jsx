@@ -7,9 +7,7 @@ var TopBar = React.createClass({
 
   switchTab(isSwitching) {
     if (isSwitching) {
-      var payload = {
-        action: "TAB_CHANGED"
-      };
+      var payload = { action: "TAB_CHANGED" };
       this.props.onAction(payload);
     }
   },

@@ -1,6 +1,6 @@
 var Blobs = Blobs || {};
 
-Blobs.StandartTableColumns = [
+Blobs.StandardTableColumns = [
   {
     header: "Identifier",
     renderCell: function(participant) {return participant.external_identifier},

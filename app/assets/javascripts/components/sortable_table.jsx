@@ -1,4 +1,6 @@
 "use strict";
+// Note: I made a completely reusable component to be reused for more features
+// in this platform or other projects
 
 var SortableTable = React.createClass({
 
@@ -33,6 +35,27 @@ var SortableTable = React.createClass({
     };
   },
 
+  // Actions
+
+  changeSort: function(idx) {
+    if (idx === this.state.sortColumnIndex) {
+      var currentSortDescending = this.state.sortDescending;
+      this.setState({ sortDescending: !currentSortDescending });
+    } else {
+      this.setState({sortColumnIndex: idx, sortDescending: false});
+    }
+  },
+
+  onChangeOption: function(payload, e){
+    var that = this;
+    var params = {
+      action: payload.action,
+      value: e.target.value,
+      rowId: payload.rowId
+    };
+    this.props.onAction(params);
+  },
+
   // Render
 
   render: function() {
@@ -65,27 +88,6 @@ var SortableTable = React.createClass({
     );
   },
 
-  changeSort: function(idx) {
-    if (idx === this.state.sortColumnIndex) {
-      var currentSortDescending = this.state.sortDescending;
-      this.setState({
-        sortDescending: !currentSortDescending
-      });
-    } else {
-      this.setState({sortColumnIndex: idx, sortDescending: false});
-    }
-  },
-
-  onChangeOption: function(payload, e){
-    var that = this;
-    var params = {
-      action: payload.action,
-      value: e.target.value,
-      rowId: payload.rowId
-    };
-    this.props.onAction(params);
-  },
-
   renderDropDown: function(row, column, columnIdx, rowStyle) {
     var dropdownColumnOptionIdKey = column.dropdown.dropdownColumnOptionIdKey;
     var options = column.dropdown.options;
@@ -93,7 +95,8 @@ var SortableTable = React.createClass({
     var uiOptions = _.map(options, function(op) {
       return ( <option key={op.id}>{op.name}</option> );
     })
-    //TODO add explanation
+    // Check the blobs file and `getColumns` in the ParticipantPlatform component
+    // to see the format of this type of column. Only the columns with dropdowns will have this attributes
     var selectedOption = _.find(options, function(op) { return op.id === row[dropdownColumnOptionIdKey]});
     return (
       <td className={rowStyle} key={columnIdx}>
@@ -107,7 +110,8 @@ var SortableTable = React.createClass({
   },
 
   renderRow: function(row, rowIdx) {
-    // TODO add comment
+    // the value of the column in the row with the same name of the validationColum
+    // will change the color of the entire row
     var validationColum = this.props.validationColum;
     var that = this;
     var rowStyle;
