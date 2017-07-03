@@ -5,7 +5,6 @@ Blobs.StandardTableColumns = [
     header: "Identifier",
     renderCell: function(participant) {return participant.external_identifier},
     sortBy: function(participant) {return participant.external_identifier},
-    initialSort: "desc",
   },
   {
     header: "Name",
@@ -18,7 +17,7 @@ Blobs.StandardTableColumns = [
     sortBy: function(participant) {return participant.age},
   },
   {
-    header: "siblings",
+    header: "Siblings",
     renderCell: function(participant) {return participant.has_siblings ? "Yes" : "No"},
     sortBy: function(participant) {return participant.has_siblings}
   },
