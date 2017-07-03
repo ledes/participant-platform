@@ -3,16 +3,15 @@
 ### Description
 Heroku app: https://quiet-beach-93641.herokuapp.com/
 
-
 In order to build this app I decided to have a backend for saving the new records.
 The backend is built on Ruby on Rails and a PostgreSQL database. For the front end I decided to use
 ReactJS(react-rails). For building the Javascript code I'm using ES5, the reason for this is that the implementation
-and deployment with ES6 in react-rails takes more time and I'm comfortable written ES5 and ES6.
-If you are interested in seeing ES6 code, I have other repos using it, please let me know
+and deployment with ES6 in react-rails takes more time and I'm as comfortable written ES5 as ES6.
+If you are interested in seeing ES6 code, I have other repos using it, please let me know.
 
 
 ### Technical Specifications
-* Ruby on Rails
+* Ruby on Rails (>= 5.0.0.1)
 * Ruby (2.3.0)
 * PostgreSQL
 * ReactJs(react-rails)
@@ -33,7 +32,7 @@ If you are interested in seeing ES6 code, I have other repos using it, please le
 ### Back end
 There are 2 tables: `Participants` and `Statuses`.
 
-* Each `status` can have many `participants`
+* Each `status` have many `participants`
 
 * Each `participant` belongs to a `status`
 
@@ -58,15 +57,17 @@ One of those component is a reusable sortable table (`sortableTable`) that I mad
 
 ### Use in development
 In order to use this app in development:
- * Make sure to use `ruby 2.3.0` and have PostgreSQL running
+ * Make sure to use `ruby 2.3.0` and have PostgreSQL running. if you don't have this version make sure to install it.
+   For intalling new ruby versions I personally use `rvm`, but there are [other ways](https://superuser.com/questions/340490/how-to-install-and-use-different-versions-of-ruby). After installing it, make sure you are using it. `rvm use 2.3.0`
+ * Make sure to have a rails environment set up. This [link](https://gorails.com/setup/osx/10.12-sierra) explains how to set it up 
  * Download the repo and access the folder within the rails app in Terminal
  * Run `bundle install`
  * Run `rake db:create && rake db:migrate && rake db:seed`
  * Run `rails s` to start the server
 
 ### Test
-This app has test for the models using Rspec. In order to run them type in
-terminal while you are in the project folder `rspec spec`
+This app has tests for the models using Rspec. In order to run them type in
+terminal while you are in the project folder `rspec spec`.
 
 
 ### What are some measures we could take to secure this application?

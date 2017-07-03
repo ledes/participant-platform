@@ -5,6 +5,7 @@ Blobs.StandardTableColumns = [
     header: "Identifier",
     renderCell: function(participant) {return participant.external_identifier},
     sortBy: function(participant) {return participant.external_identifier},
+    initialSort: "desc",
   },
   {
     header: "Name",
